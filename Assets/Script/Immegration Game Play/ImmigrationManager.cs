@@ -23,7 +23,8 @@ public class ImmigrationManager : MonoBehaviour
     }
     public void GenerateQuest()
     {
-        Quest m_quest = new Quest(name);
+        string[] randomName = { "Get down", "Omae wa mou", "Sky so high", "Raiden Shogun", "Super Idol", "King Kong" };
+        Quest m_quest = new Quest(randomName[UnityEngine.Random.Range(0, randomName.Length)]);
 
         m_quest.addUnitRequirment(CreateRandomInfo(), UnityEngine.Random.Range(1, 3));
 
