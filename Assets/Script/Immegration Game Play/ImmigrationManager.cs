@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 public class ImmigrationManager : MonoBehaviour
 {
-    private Quest m_todayQuest;
-    private Queue<Unit> m_todayUnits;
+    [SerializeField] private Quest m_todayQuest;
+    [SerializeField] private Queue<Unit> m_todayUnits;
 
-    private Unit m_currentUnit;
-    private List<Unit> m_choosenUnit;
+    [SerializeField] private Unit m_currentUnit;
+    [SerializeField] private List<Unit> m_choosenUnit;
 
     public void GenerateQuest()
     {

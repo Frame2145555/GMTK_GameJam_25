@@ -28,9 +28,9 @@ public struct UnitInfo
 [System.Serializable]
 public class Unit
 {
-    private UnitInfo m_info;
-    private bool m_accept;
-    private bool m_reject;
+    [SerializeField] private UnitInfo m_info;
+    [SerializeField] private bool m_accept;
+    [SerializeField] private bool m_reject;
 
     public Unit(UnitInfo info)
     {

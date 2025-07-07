@@ -21,10 +21,10 @@ public struct QuestInfo
 [System.Serializable]
 public class Quest
 {
-    private string m_name;
-    List<UnitInfo> m_minUnitRequirment = new List<UnitInfo>();
-    List<int> m_minCount = new List<int>();
-    List<int> m_currentCount = new List<int>();
+    [SerializeField] private string m_name;
+    [SerializeField] List<UnitInfo> m_minUnitRequirment = new List<UnitInfo>();
+    [SerializeField] List<int> m_minCount = new List<int>();
+    [SerializeField] List<int> m_currentCount = new List<int>();
 
 
     public Quest(string name)
