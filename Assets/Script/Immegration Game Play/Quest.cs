@@ -32,10 +32,14 @@ public class Quest
         m_name = name;
     }
 
-    public void addUnitRequirment(UnitInfo minInfo, int count)
+    public void AddUnitRequirment(UnitInfo minInfo, int count)
     {
         m_minUnitRequirment.Add(minInfo);
-        m_minCount.Add(count);
+        for (int i = 0; i < count; i++)
+        {
+            m_minCount.Add(count);
+            m_currentCount.Add(0);
+        }
     }
 
     public void CompareRequirment(Unit unit)
@@ -63,7 +67,7 @@ public class Quest
         }
     }
 
-    public bool checkSuccess()
+    public bool CheckSuccess()
     {
         bool isSuccess = true;
         for (int i = 0; i < m_minUnitRequirment.Count; ++i)
