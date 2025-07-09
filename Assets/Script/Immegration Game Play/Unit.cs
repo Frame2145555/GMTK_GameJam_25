@@ -35,6 +35,8 @@ public class Unit
     public Unit(UnitInfo info)
     {
         m_info = info;
+        m_accept = false;
+        m_reject = false;
     }
 
     public UnitInfo Info { get => m_info;}

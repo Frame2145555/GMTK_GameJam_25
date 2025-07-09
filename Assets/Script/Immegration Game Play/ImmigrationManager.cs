@@ -9,13 +9,13 @@ public class ImmigrationManager : MonoBehaviour
     [SerializeField] private Unit m_currentUnit;
     [SerializeField] private List<Unit> m_acceptedUnit = new List<Unit>();
     [SerializeField] private List<Unit> m_rejectedUnit = new List<Unit>();
+
     public UnitInfo CreateRandomInfo()
     {
         string[] randomName = { "Pooh", "Paul", "Sky", "Shogun", "Showy", "Kong" };
 
         UnitInfo unitInfo = new UnitInfo();
         unitInfo.name = randomName[UnityEngine.Random.Range(0, randomName.Length)];
-
         unitInfo.grade = (UnitGrade)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(UnitGrade)).Length);
         unitInfo.job = (UnitJob)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(UnitJob)).Length);
         //write a code that randomized unitInfo struct.
@@ -94,6 +94,7 @@ public class ImmigrationManager : MonoBehaviour
         }
 
         m_currentUnit = next;
+
     }
 
     [ContextMenu("reject")]
