@@ -8,12 +8,12 @@ public enum ItemType
 public class Item
 {
     private ItemType m_type;
-    private UnitStatus m_unitRealStat;
+    private UnitStat m_unitRealStat;
     private bool m_fake = false;
-    private UnitStatus m_unitFakeStat;
+    private UnitStat m_unitFakeStat;
 
     public ItemType Type { get => m_type; }
-    public UnitStatus Stat
+    public UnitStat Stat
     {
         get
         {
@@ -22,17 +22,17 @@ public class Item
             return m_unitRealStat;
         }
     }
-    public UnitStatus RealStat { get => m_unitRealStat; }
-    public UnitStatus FakeStat { get => m_unitFakeStat; }
+    public UnitStat RealStat { get => m_unitRealStat; }
+    public UnitStat FakeStat { get => m_unitFakeStat; }
     public bool IsFake { get => m_fake; }
-    public Item(ItemType type, UnitStatus stat)
+    public Item(ItemType type, UnitStat stat)
     {
         m_type = type;
         m_unitRealStat = stat;
         m_fake = false;
         m_unitFakeStat = stat;
     }
-    public Item(ItemType type, UnitStatus realStat, bool isFake, UnitStatus fakeStat)
+    public Item(ItemType type, UnitStat realStat, bool isFake, UnitStat fakeStat)
     {
         m_type = type;
         m_unitRealStat = realStat;

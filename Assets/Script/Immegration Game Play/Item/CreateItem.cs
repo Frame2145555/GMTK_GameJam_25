@@ -9,7 +9,8 @@ public class CreateItem : MonoBehaviour
     UnitFactory unitFactory = new UnitFactory();
     void Start()
     {
-        UnitStatus stat = unitFactory.CreateRandomStatus();
+        UnitStat stat = new UnitStat();
+        stat.RandomSelf();
         Item item = new Item(ItemType.Card, stat);
         Card newCard = Instantiate(cardPrefab);
         newCard.transform.parent = canvas.transform;

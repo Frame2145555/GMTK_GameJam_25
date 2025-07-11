@@ -22,17 +22,17 @@ public class UnitFactory : MonoBehaviour
         //Read from something
         string[] randomName = { "Pooh", "Paul", "Sky", "Shogun", "Showy", "Kong" };
         string name = randomName[UnityEngine.Random.Range(0, randomName.Length)];
-        UnitStat m_unitStatus = new();
-        m_unitStatus.RandomSelf();
-        Unit unit = new Unit(name, m_unitStatus, items, isFake );
+        UnitStat m_UnitStat = new();
+        m_UnitStat.RandomSelf();
+        Unit unit = new Unit(name, m_UnitStat, items, isFake );
         return unit;
     }
-    public Unit CreateUnit(UnitStat unitStatus,bool isFake, List<GameObject> items)
+    public Unit CreateUnit(UnitStat UnitStat,bool isFake, List<GameObject> items)
     {
         //Read from something
         string[] randomName = { "Pooh", "Paul", "Sky", "Shogun", "Showy", "Kong" };
         string name = randomName[UnityEngine.Random.Range(0, randomName.Length)];
-        Unit unit = new Unit(name, unitStatus, items, isFake);
+        Unit unit = new Unit(name, UnitStat, items, isFake);
         return unit;
     }
 
