@@ -8,32 +8,51 @@ public class UnitFactory : MonoBehaviour
     {
         return null;
     }
+    public Unit CreateRandomUnit()
+    {
+        string randName = GenerateFantasyName();
+        UnitStat randStat = new UnitStat();
+        randStat.RandomSelf();
+
+        return new Unit(randName,randStat);
+
+    }
     public Unit CreateUnit(bool isFake, List<GameObject> items)
     {
         //Read from something
         string[] randomName = { "Pooh", "Paul", "Sky", "Shogun", "Showy", "Kong" };
         string name = randomName[UnityEngine.Random.Range(0, randomName.Length)];
-        UnitStatus m_unitStatus = CreateRandomStatus();
-        Unit unit = new Unit(name, m_unitStatus, isFake, items);
+        UnitStat m_unitStatus = new();
+        m_unitStatus.RandomSelf();
+        Unit unit = new Unit(name, m_unitStatus, items, isFake );
         return unit;
     }
-    public Unit CreateUnit(UnitStatus unitStatus,bool isFake, List<GameObject> items)
+    public Unit CreateUnit(UnitStat unitStatus,bool isFake, List<GameObject> items)
     {
         //Read from something
         string[] randomName = { "Pooh", "Paul", "Sky", "Shogun", "Showy", "Kong" };
         string name = randomName[UnityEngine.Random.Range(0, randomName.Length)];
-        Unit unit = new Unit(name, unitStatus, isFake, items);
+        Unit unit = new Unit(name, unitStatus, items, isFake);
         return unit;
     }
-    public UnitStatus CreateRandomStatus()
+
+    string GenerateFantasyName()
     {
-        UnitStatus unitStatus = new UnitStatus();
+        string[] surnames = {
+            "Aure", "Eldrin", "Faylen", "Thorne", "Silvar",
+            "Ashen", "Kael", "Myrr", "Orin", "Zephyr"
+        };
 
-        unitStatus.grade = (UnitGrade)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(UnitGrade)).Length);
-        unitStatus.job = (UnitJob)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(UnitJob)).Length);
+        string[] lastNames = {
+            "Stormborn", "Dawnbringer", "Nightshade", "Starfall", "Ironheart",
+            "Shadowveil", "Emberwind", "Mooncrest", "Brightblade", "Windrider"
+        };
 
-        //write a code that randomized UnitStatus struct.
-        Debug.Log($"Create UnitStatus Name: , Grade: {unitStatus.grade}, Job: {unitStatus.job}");
-        return unitStatus;
+        System.Random rand = new System.Random();
+
+        string surname = surnames[rand.Next(surnames.Length)];
+        string lastName = lastNames[rand.Next(lastNames.Length)];
+
+        return $"{surname} {lastName}";
     }
 }
