@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
@@ -16,94 +17,62 @@ public struct QuestInfo
     public string name;
     public string description;
     public QuestRank rank;
+
+    string RandomDescription()
+    {
+        System.Random random = new System.Random();
+
+        string[] words1 = { "Find", "Defeat", "Rescue", "Escort", "Collect", "Destroy", "Protect" };
+        string[] words2 = { "Lost", "Hidden", "Ancient", "Mystic", "Wild", "Dark", "Cursed" };
+        string[] words3 = { "Relic", "Beast", "Artifact", "Scroll", "Treasure", "Princess", "Village" };
+
+        int wordCount = random.Next(1, 4); // 1 to 3 words
+        string _description = "";
+
+        if (wordCount >= 1)
+            _description += words1[random.Next(words1.Length)];
+
+        if (wordCount >= 2)
+            _description += " " + words2[random.Next(words2.Length)];
+
+        if (wordCount == 3)
+            _description += " " + words3[random.Next(words3.Length)];
+
+        return _description;
+    }
+    public void RandomSelf()
+    {
+        string[] nameArr = { "Get down", "Omae wa mou", "Sky so high", "Raiden Shogun", "Super Idol", "King Kong" };
+        name = nameArr[UnityEngine.Random.Range(0, nameArr.Length)];
+        description = RandomDescription();
+        rank = Auxiliary.RandomEnum<QuestRank>();
+    }
 }
 
 [System.Serializable]
 public class Quest
 {
-    [SerializeField] private string m_name;
-    [SerializeField] private string m_description;
-    [SerializeField] private QuestRank m_level;
-    [SerializeField] private List<Objective> m_objective = new List<Objective>();
-    [SerializeField] private List<Unit> m_choosenUnit = new List<Unit>();
-    [SerializeField] private bool m_success;
+    [SerializeField] private QuestInfo m_info;
+    [SerializeField] private int m_id;
 
-    public string Name { get => m_name; }
-    public string Description { get => m_description; }
-    public QuestRank Level { get => m_level; }
-    public List<Objective> Objective { get => m_objective; }
-    public List<Unit> ChoosenUnit { get => m_choosenUnit; }
+    [SerializeField] private List<Objective> m_objectives;
 
-    // [SerializeField] List<UnitStatus> m_minUnitRequirment = new List<UnitStatus>();
-    // [SerializeField] List<int> m_minCount = new List<int>();
-    // [SerializeField] List<int> m_currentCount = new List<int>();
-
-
-    public Quest(string name, string description, QuestRank rank)
+    public Quest(QuestInfo info, int id, List<Objective> objectives)
     {
-        m_name = name;
-        m_description = description;
-        m_success = false;
-        m_level = rank;
-
+        m_info = info;
+        m_id = id;
+        m_objectives = objectives;
     }
-    public void AddObjective(Objective objective)
+
+    public bool ConfirmQuest(List<Unit> units)
     {
-        m_objective.Add(objective);
+        foreach (var unit in units)
+        {
+            m_objectives.ForEach(obj => obj.CheckRequriment(unit));
+        }
+
+        //return true if all objective is success
+        return m_objectives.TrueForAll(obj => obj.IsComplete());
     }
-    public void AddUnit(Unit unit)
-    {
-        m_choosenUnit.Add(unit);
-    }
-    public void UpdateSuccess(bool success)
-    {
-        m_success = success;
-    }
-    public bool CheckSuccess() => m_success;
-
-    // public void AddUnitRequirment(UnitStatus minInfo, int count)
-    // {
-    //     m_minUnitRequirment.Add(minInfo);
-    //     for (int i = 0; i < count; i++)
-    //     {
-    //         m_minCount.Add(count);
-    //         m_currentCount.Add(0);
-    //     }
-    // }
-
-    // public void CompareRequirment(Unit unit)
-    // {
-    //     UnitStatus info = unit.Info;
-
-    //     for (int i = 0; i < m_minUnitRequirment.Count; ++i) 
-    //     {
-    //         UnitStatus minInfo = m_minUnitRequirment[i];
-
-    //         if (info.job == minInfo.job
-    //             || info.grade > minInfo.grade
-    //             )
-    //         {
-    //             if (m_currentCount[i] < m_minCount[i])
-    //             {
-    //                 m_currentCount[i]++;
-    //                 return;
-    //             }
-    //             else
-    //             {
-    //                 continue;
-    //             }
-    //         }
-    //     }
-    // }
-
-    // public bool CheckSuccess()
-    // {
-    //     bool isSuccess = true;
-    //     for (int i = 0; i < m_minUnitRequirment.Count; ++i)
-    //     {
-    //         isSuccess = isSuccess && m_currentCount[i] >= m_minCount[i];
-    //     }
-    //     return isSuccess;
-    // }
 
 }

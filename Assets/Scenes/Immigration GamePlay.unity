@@ -128,7 +128,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 856211908}
-  - component: {fileID: 856211907}
+  - component: {fileID: 856211910}
+  - component: {fileID: 856211909}
+  - component: {fileID: 856211911}
   m_Layer: 0
   m_Name: im
   m_TagString: Untagged
@@ -136,31 +138,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &856211907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 856211906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35ccd3ab796388a4a84386cb4fb1c6a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_todayQuest:
-    m_name: 
-    m_minUnitRequirment: []
-    m_minCount: 
-    m_currentCount: 
-  m_currentUnit:
-    m_info:
-      name: 
-      grade: 0
-      job: 0
-    m_accept: 0
-    m_reject: 0
-  m_choosenUnit: []
 --- !u!4 &856211908
 Transform:
   m_ObjectHideFlags: 0
@@ -176,6 +153,69 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &856211909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856211906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2fc06a4856e3364a9422e91c8b33c49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_currentCondition: 3
+  m_QuestPreview:
+    m_info:
+      name: 
+      description: 
+      rank: 0
+    m_id: 0
+    m_objectives: []
+--- !u!114 &856211910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856211906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5175716ac196b4f41995bcf26be2fd26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_todayQuest:
+    m_info:
+      name: 
+      description: 
+      rank: 0
+    m_id: 0
+    m_objectives: []
+  m_current:
+    m_name: 
+    m_stat:
+      grade: 0
+      job: 0
+    m_items: []
+    m_accept: 0
+    m_reject: 0
+    m_fake: 0
+  m_acceptUnits: []
+  m_rejectedUnits: []
+  m_unitCount: 100
+--- !u!114 &856211911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856211906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c327858de0fca343a3837aea0f32a71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1236603254
 GameObject:
   m_ObjectHideFlags: 0
