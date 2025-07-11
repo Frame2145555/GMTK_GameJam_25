@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 [System.Serializable]
 
 public enum UnitGrade
@@ -16,9 +16,8 @@ public enum UnitJob
 }
 [System.Serializable]
 
-public struct UnitInfo
+public struct UnitStatus
 {
-    public string name;
     public UnitGrade grade;
     public UnitJob job;
 }
@@ -28,19 +27,25 @@ public struct UnitInfo
 [System.Serializable]
 public class Unit
 {
-    [SerializeField] private UnitInfo m_info;
+    [SerializeField] string m_name;
+    [SerializeField] private UnitStatus m_status;
     [SerializeField] private bool m_accept;
     [SerializeField] private bool m_reject;
-
-    public Unit(UnitInfo info)
+    [SerializeField] private bool m_fake;
+    [SerializeField] private List<GameObject> m_items;
+    public Unit(string name, UnitStatus status, bool isFake, List<GameObject> items)
     {
-        m_info = info;
+        m_name = name;
+        m_status = status;
         m_accept = false;
         m_reject = false;
+        m_fake = isFake;
+        m_items = items;
     }
-
-    public UnitInfo Info { get => m_info;}
+    public string Name { get => m_name; }
+    public UnitStatus Status { get => m_status; }
     public bool Accept { get => m_accept; set => m_accept = value; }
     public bool Reject { get => m_reject; set => m_reject = value; }
-
+    public bool IsFake { get => m_fake; }
+    public List<GameObject> Items { get => m_items; }
 }
