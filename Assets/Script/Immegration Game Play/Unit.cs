@@ -33,24 +33,17 @@ public struct UnitStat
 [System.Serializable]
 public class Unit
 {
-    [SerializeField] string m_name;
-    [SerializeField] private UnitStat m_stat;
-    [SerializeField] private List<GameObject> m_items;
+    [SerializeField] public string m_name;
+    [SerializeField] public UnitStat m_stat;
+    [SerializeField] public List<GameObject> m_items;
 
-    [SerializeField] private bool m_accept = false;
-    [SerializeField] private bool m_reject = false;
-    [SerializeField] private bool m_fake = false;
-    public Unit(string name, UnitStat status, List<GameObject> items = null, bool isFake = false)
+    public Unit(string name, UnitStat status, List<GameObject> items = null)
     {
         m_name = name;
         m_stat = status;
-        m_fake = isFake;
         m_items = items;
     }
     public string Name { get => m_name; }
     public UnitStat Stat { get => m_stat; }
-    public bool Accept { get => m_accept; set => m_accept = value; }
-    public bool Reject { get => m_reject; set => m_reject = value; }
-    public bool IsFake { get => m_fake; }
     public List<GameObject> Items { get => m_items; }
 }
