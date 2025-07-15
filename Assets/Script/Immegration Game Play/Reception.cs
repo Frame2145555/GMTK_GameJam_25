@@ -52,18 +52,15 @@ public class Reception : MonoBehaviour
 
         if (accept)
         {
-            m_current.Accept = true;
             m_acceptUnits.Add(m_current);
         }
         else
         {
-            m_current.Reject = true;
             m_rejectedUnits.Add(m_current);
-
         }
 
         m_current = NextInQueue();
-        
+    
     }
 
     [ContextMenu("Accept")]
