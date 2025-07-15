@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 [System.Serializable]
 
 public enum UnitGrade
@@ -16,11 +16,16 @@ public enum UnitJob
 }
 [System.Serializable]
 
-public struct UnitInfo
+public struct UnitStat
 {
-    public string name;
     public UnitGrade grade;
     public UnitJob job;
+
+    public void RandomSelf()
+    {
+        grade = Auxiliary.RandomEnum<UnitGrade>();
+        job = Auxiliary.RandomEnum<UnitJob>();
+    }
 }
 /// <summary>
 /// Unit class is the data container of a person
@@ -28,19 +33,17 @@ public struct UnitInfo
 [System.Serializable]
 public class Unit
 {
-    [SerializeField] private UnitInfo m_info;
-    [SerializeField] private bool m_accept;
-    [SerializeField] private bool m_reject;
+    [SerializeField] public string m_name;
+    [SerializeField] public UnitStat m_stat;
+    [SerializeField] public List<GameObject> m_items;
 
-    public Unit(UnitInfo info)
+    public Unit(string name, UnitStat status, List<GameObject> items = null)
     {
-        m_info = info;
-        m_accept = false;
-        m_reject = false;
+        m_name = name;
+        m_stat = status;
+        m_items = items;
     }
-
-    public UnitInfo Info { get => m_info;}
-    public bool Accept { get => m_accept; set => m_accept = value; }
-    public bool Reject { get => m_reject; set => m_reject = value; }
-
+    public string Name { get => m_name; }
+    public UnitStat Stat { get => m_stat; }
+    public List<GameObject> Items { get => m_items; }
 }

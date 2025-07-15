@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
@@ -16,61 +17,62 @@ public struct QuestInfo
     public string name;
     public string description;
     public QuestRank rank;
+
+    string RandomDescription()
+    {
+        System.Random random = new System.Random();
+
+        string[] words1 = { "Find", "Defeat", "Rescue", "Escort", "Collect", "Destroy", "Protect" };
+        string[] words2 = { "Lost", "Hidden", "Ancient", "Mystic", "Wild", "Dark", "Cursed" };
+        string[] words3 = { "Relic", "Beast", "Artifact", "Scroll", "Treasure", "Princess", "Village" };
+
+        int wordCount = random.Next(1, 4); // 1 to 3 words
+        string _description = "";
+
+        if (wordCount >= 1)
+            _description += words1[random.Next(words1.Length)];
+
+        if (wordCount >= 2)
+            _description += " " + words2[random.Next(words2.Length)];
+
+        if (wordCount == 3)
+            _description += " " + words3[random.Next(words3.Length)];
+
+        return _description;
+    }
+    public void RandomSelf()
+    {
+        string[] nameArr = { "Get down", "Omae wa mou", "Sky so high", "Raiden Shogun", "Super Idol", "King Kong" };
+        name = nameArr[UnityEngine.Random.Range(0, nameArr.Length)];
+        description = RandomDescription();
+        rank = Auxiliary.RandomEnum<QuestRank>();
+    }
 }
 
 [System.Serializable]
 public class Quest
 {
-    [SerializeField] private string m_name;
-    [SerializeField] List<UnitInfo> m_minUnitRequirment = new List<UnitInfo>();
-    [SerializeField] List<int> m_minCount = new List<int>();
-    [SerializeField] List<int> m_currentCount = new List<int>();
+    [SerializeField] private QuestInfo m_info;
+    [SerializeField] private int m_id;
 
+    [SerializeField] private List<Objective> m_objectives;
 
-    public Quest(string name)
+    public Quest(QuestInfo info, int id, List<Objective> objectives)
     {
-        m_name = name;
+        m_info = info;
+        m_id = id;
+        m_objectives = objectives;
     }
 
-    public void addUnitRequirment(UnitInfo minInfo, int count)
+    public bool ConfirmQuest(List<Unit> units)
     {
-        m_minUnitRequirment.Add(minInfo);
-        m_minCount.Add(count);
-    }
-
-    public void CompareRequirment(Unit unit)
-    {
-        UnitInfo info = unit.Info;
-
-        for (int i = 0; i < m_minUnitRequirment.Count; ++i) 
+        foreach (var unit in units)
         {
-            UnitInfo minInfo = m_minUnitRequirment[i];
-
-            if (info.job == minInfo.job
-                || info.grade > minInfo.grade
-                )
-            {
-                if (m_currentCount[i] < m_minCount[i])
-                {
-                    m_currentCount[i]++;
-                    return;
-                }
-                else
-                {
-                    continue;
-                }
-            }
+            m_objectives.ForEach(obj => obj.CheckRequriment(unit));
         }
-    }
 
-    public bool checkSuccess()
-    {
-        bool isSuccess = true;
-        for (int i = 0; i < m_minUnitRequirment.Count; ++i)
-        {
-            isSuccess = isSuccess && m_currentCount[i] >= m_minCount[i];
-        }
-        return isSuccess;
+        //return true if all objective is success
+        return m_objectives.TrueForAll(obj => obj.IsComplete());
     }
 
 }
