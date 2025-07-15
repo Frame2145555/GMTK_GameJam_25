@@ -2,41 +2,35 @@ using UnityEngine;
 
 public enum ItemType
 {
-    Necklect,
-    Card
+    Card,
+    Job,
+    World
 }
 public class Item
 {
-    private ItemType m_type;
-    private UnitStat m_unitRealStat;
-    private bool m_fake = false;
-    private UnitStat m_unitFakeStat;
-
-    public ItemType Type { get => m_type; }
-    public UnitStat Stat
+    private Unit owner;
+    private ItemType type;
+    private string name;
+    private UnitStat stat;
+    private bool isFake;
+    public Unit Owner { get => owner; }
+    public ItemType Type { get => type; }
+    public string Name { get => name; }
+    public UnitStat Stat { get => stat; }
+    public bool IsFake { get => isFake; }
+    public Item(Unit owner, string name, UnitStat stat, ItemType type)
     {
-        get
-        {
-            if (m_fake)
-                return m_unitFakeStat;
-            return m_unitRealStat;
-        }
+        this.owner = owner;
+        this.name = name;
+        this.stat = stat;
+        this.type = type;
     }
-    public UnitStat RealStat { get => m_unitRealStat; }
-    public UnitStat FakeStat { get => m_unitFakeStat; }
-    public bool IsFake { get => m_fake; }
-    public Item(ItemType type, UnitStat stat)
+    public Item(Unit owner, string name, UnitStat stat, ItemType type, bool isFake)
     {
-        m_type = type;
-        m_unitRealStat = stat;
-        m_fake = false;
-        m_unitFakeStat = stat;
-    }
-    public Item(ItemType type, UnitStat realStat, bool isFake, UnitStat fakeStat)
-    {
-        m_type = type;
-        m_unitRealStat = realStat;
-        m_fake = isFake;
-        m_unitFakeStat = fakeStat;
+        this.owner = owner;
+        this.name = name;
+        this.stat = stat;
+        this.type = type;
+        this.isFake = isFake;
     }
 }

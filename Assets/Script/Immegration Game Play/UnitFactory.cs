@@ -30,7 +30,7 @@ public class UnitFactory : MonoBehaviour
         string[] randomName = { "Pooh", "Paul", "Sky", "Shogun", "Showy", "Kong" };
         string name = randomName[UnityEngine.Random.Range(0, randomName.Length)];
 
-        Unit unit = new Unit(name, unitStatus, items);
+        Unit unit = new Unit(name, UnitStat, items);
         return unit;
     }
 

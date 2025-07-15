@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Card : MonoBehaviour
 {
-    [SerializeField] Image profile;
-    [SerializeField] TMP_Text job;
-    [SerializeField] TMP_Text rank;
-    [SerializeField] GameObject rankLogo;
+    [SerializeField] SpriteRenderer profile;
+    [SerializeField] TMP_Text m_name;
+    [SerializeField] TMP_Text m_job;
+    [SerializeField] TMP_Text m_grade;
     [SerializeField] Item m_item;
     public Item Item { get => m_item; }
 
@@ -15,30 +15,20 @@ public class Card : MonoBehaviour
     void Start()
     {
         if (!profile)
-            profile = transform.Find("Image").GetComponent<Image>();
-        if (!job)
-            job = profile.transform.Find("job").GetComponent<TMP_Text>();
-        if (!rank)
-            rank = profile.transform.Find("rank").GetComponent<TMP_Text>();
-        if (!rankLogo)
-            rankLogo = transform.Find("ranklogo").gameObject;
+            profile = transform.Find("Profile").GetComponent<SpriteRenderer>();
+        if (!m_job)
+            m_job = transform.Find("Job").GetComponent<TMP_Text>();
+        if (!m_grade)
+            m_grade = transform.Find("Grade").GetComponent<TMP_Text>();
+        if (!m_name)
+            m_name = transform.Find("Name").GetComponent<TMP_Text>();
     }
     public void SetUp(Item item)
     {
-        m_item = item; 
-        job.text = item.Stat.job.ToString();
-        rank.text = item.Stat.grade.ToString();
-        CreateLogo(item.Stat.grade);
-    }
-    void CreateLogo(UnitGrade grade)
-    {
-        Transform temp = rankLogo.transform.Find("base");
-        int value = (int)grade + 1;
-        for (int i = 0; i < value; i++)
-        {
-            Transform newTemp = Instantiate(temp);
-            newTemp.gameObject.SetActive(true);
-            newTemp.parent = rankLogo.transform;
-        }
+        m_item = item;
+        m_name.text = item.Owner.Name.ToString();
+        m_job.text = item.Stat.job.ToString();
+        m_grade.text = item.Stat.grade.ToString();
+        //profile.sprite = item.Unit.Image;
     }
 }
