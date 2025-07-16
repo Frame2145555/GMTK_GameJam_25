@@ -4,14 +4,15 @@ using System;
 
 public class UnitFactory : MonoBehaviour
 {
-    [SerializeField] ItemFactory iFac;
+    ItemFactory iFac = new ItemFactory();
     public Unit CreateRandomUnit()
     {
         string randName = GenerateFantasyName();
         UnitStat randStat = new UnitStat();
         randStat.RandomSelf();
-
-        return new Unit(randName, randStat);
+        Unit newUnit = new Unit(randName, randStat);
+        newUnit.AddItem(iFac.CreateRandomItem(newUnit, randStat));
+        return newUnit;
 
     }
     public Unit CreateUnit( List<Item> items)
