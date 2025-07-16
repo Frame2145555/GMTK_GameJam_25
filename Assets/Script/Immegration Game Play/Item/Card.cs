@@ -23,12 +23,12 @@ public class Card : MonoBehaviour
         if (!m_name)
             m_name = transform.Find("Name").GetComponent<TMP_Text>();
     }
-    public void SetUp(Item item)
+    public void SetUp(Item item,Sprite portrait)
     {
         m_item = item;
         m_name.text = item.Owner.Name.ToString();
         m_job.text = item.Stat.job.ToString();
         m_grade.text = item.Stat.grade.ToString();
-        //profile.sprite = item.Unit.Image;
+        profile.sprite = portrait;
     }
 }

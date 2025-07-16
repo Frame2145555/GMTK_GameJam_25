@@ -4,16 +4,17 @@ using System;
 
 public class UnitFactory : MonoBehaviour
 {
+    [SerializeField] ItemFactory iFac;
     public Unit CreateRandomUnit()
     {
         string randName = GenerateFantasyName();
         UnitStat randStat = new UnitStat();
         randStat.RandomSelf();
 
-        return new Unit(randName,randStat);
+        return new Unit(randName, randStat);
 
     }
-    public Unit CreateUnit(bool isFake, List<GameObject> items)
+    public Unit CreateUnit( List<Item> items)
     {
         //Read from something
         string[] randomName = { "Pooh", "Paul", "Sky", "Shogun", "Showy", "Kong" };
@@ -24,7 +25,7 @@ public class UnitFactory : MonoBehaviour
         Unit unit = new Unit(name, m_unitStatus, items);
         return unit;
     }
-    public Unit CreateUnit(UnitStat UnitStat,bool isFake, List<GameObject> items)
+    public Unit CreateUnit(UnitStat UnitStat, List<Item> items)
     {
         //Read from something
         string[] randomName = { "Pooh", "Paul", "Sky", "Shogun", "Showy", "Kong" };

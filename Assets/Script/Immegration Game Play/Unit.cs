@@ -35,9 +35,9 @@ public class Unit
 {
     [SerializeField] public string m_name;
     [SerializeField] public UnitStat m_stat;
-    [SerializeField] public List<GameObject> m_items;
+    [SerializeField] public List<Item> m_items;
 
-    public Unit(string name, UnitStat status, List<GameObject> items = null)
+    public Unit(string name, UnitStat status, List<Item> items = null)
     {
         m_name = name;
         m_stat = status;
@@ -45,5 +45,9 @@ public class Unit
     }
     public string Name { get => m_name; }
     public UnitStat Stat { get => m_stat; }
-    public List<GameObject> Items { get => m_items; }
+    public List<Item> Items { get => m_items; }
+    public void AddItem(Item item)
+    {
+        m_items.Add(item);
+    }
 }
