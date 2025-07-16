@@ -1,5 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
+public struct ItemPortrait
+{
+    public Sprite portrait;
+    public UnitJob job;
+    public string name;
+}
 public class ItemGameObjectBuilder : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -7,56 +14,59 @@ public class ItemGameObjectBuilder : MonoBehaviour
     [SerializeField] Card cardPrefab;
     [SerializeField] JobItem jobItemPrefab;
     [SerializeField] WorldItem worldItemPrefab;
-    [Header("Card Item")]
-    [SerializeField] List<Sprite> cardPortrait = new List<Sprite>();
-    [SerializeField] List<UnitJob> cardJobName = new List<UnitJob>();
-    Dictionary<UnitJob, Sprite> cardPortraitDict = new Dictionary<UnitJob, Sprite>();
-    [Header("Job Item")]
-    [SerializeField] List<UnitJob> job = new List<UnitJob>();
-    [SerializeField] List<Sprite> jobSprite = new List<Sprite>();
-    Dictionary<UnitJob, Sprite> jobItemDict = new Dictionary<UnitJob, Sprite>();
+    [Header("Card Item (the Name Parameter is not being used)")]
+    [SerializeField] List<ItemPortrait> cardItem = new List<ItemPortrait>();
+    Dictionary<UnitJob, Sprite> cardItemDict = new Dictionary<UnitJob, Sprite>();
+    [Header("Job Item (All Parameter is being used)")]
+    [SerializeField] List<ItemPortrait> jobItem = new List<ItemPortrait>();
+    Dictionary<UnitJob, Dictionary<string, Sprite>> jobItemDict = new Dictionary<UnitJob, Dictionary<string, Sprite>>();
 
-    [Header("World Item")]
-    [SerializeField] List<string> itemName = new List<string>();
-    [SerializeField] List<Sprite> itemSprite = new List<Sprite>();
+    [Header("World Item (the job Parameter is being used)")]
+    [SerializeField] List<ItemPortrait> worldItem = new List<ItemPortrait>();
     Dictionary<string, Sprite> worldItemDict = new Dictionary<string, Sprite>();
     void Start()
     {
         //Card Portrait
-        for (int i = 0; i < cardJobName.Count && i < cardPortrait.Count; i++)
+        for (int i = 0; i < cardItem.Count; i++)
         {
-            if (!cardPortraitDict.ContainsKey(cardJobName[i]))
+            if (!cardItemDict.ContainsKey(cardItem[i].job))
             {
-                cardPortraitDict.Add(cardJobName[i], cardPortrait[i]);
+                cardItemDict.Add(cardItem[i].job, cardItem[i].portrait);
             }
             else
             {
-                Debug.LogWarning($"Duplicate key found: {cardJobName[i]}");
+                Debug.LogWarning($"Duplicate key found: {cardItem[i].job}");
             }
         }
 
         //Job Item Sprite
-        for (int i = 0; i < job.Count && i < jobSprite.Count; i++)
+        foreach (UnitJob job in Enum.GetValues(typeof(UnitJob)))
         {
-            if (!jobItemDict.ContainsKey(job[i]))
+            Dictionary<string, Sprite> tempDict = new Dictionary<string, Sprite>();
+            for (int i = 0; i < jobItem.Count; i++)
             {
-                jobItemDict.Add(job[i], jobSprite[i]);
+                if (!jobItemDict.ContainsKey(job) && !tempDict.ContainsKey(jobItem[i].name) && jobItem[i].job == job)
+                {
+                    tempDict.Add(jobItem[i].name, jobItem[i].portrait);
+                }
+                else
+                {
+                    Debug.LogWarning($"Duplicate key found: {jobItem[i].portrait}");
+                }
             }
-            else
-            {
-                Debug.LogWarning($"Duplicate key found: {job[i]}");
-            }
+            jobItemDict.Add(job, tempDict);
         }
+
         //World item Sprite
-        for (int i = 0; i < itemName.Count && i < itemSprite.Count; i++)
+        for (int i = 0; i < worldItem.Count; i++)
         {
-            if (!worldItemDict.ContainsKey(itemName[i]))
+            if (!worldItemDict.ContainsKey(worldItem[i].name))
             {
-                worldItemDict.Add(itemName[i], itemSprite[i]);
+                worldItemDict.Add(worldItem[i].name, worldItem[i].portrait);
             }
             else
             {
-                Debug.LogWarning($"Duplicate key found: {itemName[i]}");
+                Debug.LogWarning($"Duplicate key found: {worldItem[i].name}");
             }
         }
     }
@@ -84,14 +94,14 @@ public class ItemGameObjectBuilder : MonoBehaviour
     {
         GameObject newObject = Instantiate(cardPrefab).gameObject;
 
-        newObject.GetComponent<Card>().SetUp(item,cardPortraitDict[item.Owner.Stat.job]);
+        newObject.GetComponent<Card>().SetUp(item,cardItemDict[item.Owner.Stat.job]);
         return newObject; 
     }
     GameObject CreateJobItem(Item item)
     {
         GameObject newObject = Instantiate(jobItemPrefab).gameObject;
 
-        newObject.GetComponent<JobItem>().SetUp(item, jobItemDict[item.Owner.Stat.job]);
+        newObject.GetComponent<JobItem>().SetUp(item, jobItemDict[item.Owner.Stat.job][item.Name]);
         return newObject; 
     }
     GameObject CreateWorldItem(Item item)

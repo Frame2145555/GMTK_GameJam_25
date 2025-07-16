@@ -18,14 +18,7 @@ public class Item
     public string Name { get => name; }
     public UnitStat Stat { get => stat; }
     public bool IsFake { get => isFake; }
-    public Item(Unit owner, string name, UnitStat stat, ItemType type)
-    {
-        this.owner = owner;
-        this.name = name;
-        this.stat = stat;
-        this.type = type;
-    }
-    public Item(Unit owner, string name, UnitStat stat, ItemType type, bool isFake)
+    public Item(Unit owner, string name, UnitStat stat, ItemType type, bool isFake = false)
     {
         this.owner = owner;
         this.name = name;

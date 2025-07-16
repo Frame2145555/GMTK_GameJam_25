@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -15,13 +16,13 @@ public class Card : MonoBehaviour
     void Start()
     {
         if (!profile)
-            profile = transform.Find("Profile").GetComponent<SpriteRenderer>();
+            Auxiliary.CheckInspectorNotAssign<SpriteRenderer>(profile);
         if (!m_job)
-            m_job = transform.Find("Job").GetComponent<TMP_Text>();
+            Auxiliary.CheckInspectorNotAssign<TMP_Text>(m_job);
         if (!m_grade)
-            m_grade = transform.Find("Grade").GetComponent<TMP_Text>();
+            Auxiliary.CheckInspectorNotAssign<TMP_Text>(m_grade);
         if (!m_name)
-            m_name = transform.Find("Name").GetComponent<TMP_Text>();
+            Auxiliary.CheckInspectorNotAssign<TMP_Text>(m_name);
     }
     public void SetUp(Item item,Sprite portrait)
     {

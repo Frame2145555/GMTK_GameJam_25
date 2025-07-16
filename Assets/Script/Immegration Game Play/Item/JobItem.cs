@@ -11,7 +11,8 @@ public class JobItem : MonoBehaviour
     void Start()
     {
         if (!m_sprite)
-            m_sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+            Auxiliary.CheckInspectorNotAssign<SpriteRenderer>(m_sprite);
+            // m_sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
     }
     public void SetUp(Item item, Sprite sprite)
     {
