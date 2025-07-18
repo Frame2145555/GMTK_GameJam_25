@@ -5,6 +5,7 @@ public class Reception : MonoBehaviour
 {
     QuestFactory qFac;
     UnitFactory uFac;
+    ItemFactory iFac;
 
     [SerializeField] private Quest m_todayQuest;
     [SerializeField] private Queue<Unit> m_lineUp = new Queue<Unit>();
@@ -41,6 +42,7 @@ public class Reception : MonoBehaviour
     {
         qFac = GetComponent<QuestFactory>();
         uFac = GetComponent<UnitFactory>();
+        iFac = GetComponent<ItemFactory>();
     }
     [ContextMenu("Next Day")]
     public void NextDay()

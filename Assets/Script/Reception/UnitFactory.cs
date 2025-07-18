@@ -4,31 +4,35 @@ using System;
 
 public class UnitFactory : MonoBehaviour
 {
+    ItemFactory iFac = new ItemFactory();
     public Unit CreateRandomUnit()
     {
         string randName = GenerateFantasyName();
         UnitStat randStat = new UnitStat();
         randStat.RandomSelf();
-
-        return new Unit(randName,randStat);
+        Unit newUnit = new Unit(randName, randStat);
+        newUnit.AddItem(iFac.CreateRandomItem(newUnit, randStat));
+        return newUnit;
 
     }
-    public Unit CreateUnit(bool isFake, List<GameObject> items)
+    public Unit CreateUnit( List<Item> items)
     {
         //Read from something
         string[] randomName = { "Pooh", "Paul", "Sky", "Shogun", "Showy", "Kong" };
         string name = randomName[UnityEngine.Random.Range(0, randomName.Length)];
+
         UnitStat m_unitStatus = new();
         m_unitStatus.RandomSelf();
         Unit unit = new Unit(name, m_unitStatus, items);
         return unit;
     }
-    public Unit CreateUnit(UnitStat unitStatus,bool isFake, List<GameObject> items)
+    public Unit CreateUnit(UnitStat UnitStat, List<Item> items)
     {
         //Read from something
         string[] randomName = { "Pooh", "Paul", "Sky", "Shogun", "Showy", "Kong" };
         string name = randomName[UnityEngine.Random.Range(0, randomName.Length)];
-        Unit unit = new Unit(name, unitStatus, items);
+
+        Unit unit = new Unit(name, UnitStat, items);
         return unit;
     }
 
