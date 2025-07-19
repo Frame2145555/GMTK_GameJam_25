@@ -102,7 +102,6 @@ public class DevModeQuestUIHandler : MonoBehaviour
     }
     public void Active(bool active)
     {
-        Debug.Log($"SetActive {active} ");
         m_title.gameObject.SetActive(active);
         m_description.gameObject.SetActive(active);
         m_rank.gameObject.SetActive(active);
