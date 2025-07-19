@@ -1,26 +1,27 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using Unity.VisualScripting;
 public class Reception : MonoBehaviour
 {
     QuestFactory qFac;
     UnitFactory uFac;
     ItemFactory iFac;
 
-    [SerializeField] private Quest m_todayQuest;
+    [SerializeField] private List<Quest> m_todayQuest = new List<Quest>();
     [SerializeField] private Queue<Unit> m_lineUp = new Queue<Unit>();
     [SerializeField] private Unit m_currentUnit;
-
-    [SerializeField] private List<Unit> m_acceptUnits = new List<Unit>();
+    
+    [SerializeField] private List<List<Unit>> m_acceptUnits = new List<List<Unit>>();
     [SerializeField] private List<Unit> m_rejectedUnits = new List<Unit>();
-
     [Header("Config")]
     [SerializeField] private int m_unitCount = 10;
-
+    [SerializeField] private int m_maxObjectiveCount = 1;
+    private int m_day = 1;
     public Action OnDayNext;
     public Action OnQueueNext;
-
-    public Unit CurrentUnit { 
+    public int Day { get => m_day; }
+    public Unit CurrentUnit {
         get
         {
             // Debug
@@ -36,34 +37,62 @@ public class Reception : MonoBehaviour
             OnQueueNext?.Invoke();
         }
     }
-
-    public Quest TodayQuest { get => m_todayQuest; }
+    public int FindIndexOfQuest(Quest quest)
+    {
+        return m_todayQuest.IndexOf(quest);
+    }
+    public List<Quest> TodayQuest { get => m_todayQuest; }
     private void Start()
     {
         qFac = GetComponent<QuestFactory>();
         uFac = GetComponent<UnitFactory>();
         iFac = GetComponent<ItemFactory>();
+        for (int i = 0; i < QuestCount(); i++)
+        {
+            m_todayQuest.Add(qFac.CreateRandomQuest(1));
+            m_acceptUnits.Add(new List<Unit>());
+        }
+    }
+    
+    bool ComfirmQuest()
+    {
+        for (int i = 0;i < QuestCount(); i++)
+        {
+            if(!m_todayQuest[i].ConfirmQuest(m_acceptUnits[i]))
+                return false;
+        }
+        return true;
     }
     [ContextMenu("Next Day")]
     public void NextDay()
     {
-        if (m_todayQuest != null)
+        if (m_acceptUnits != null && m_todayQuest != null)
         {
-            string logSuccess = m_todayQuest.ConfirmQuest(m_acceptUnits)? "Quest Success!" : "Quest Failed...";
+            string logSuccess = ComfirmQuest() ? "Quest Success!" : "Quest Failed...";
             Debug.Log(logSuccess);
         }
 
         m_lineUp.Clear();
         m_acceptUnits.Clear();
         m_rejectedUnits.Clear();
-
+        m_todayQuest.Clear();
+        m_day += 1;
         //create quest
-        m_todayQuest = qFac.CreateRandomQuest(3);
-        //create units base upon quest
-        for (int i = 0; i < m_unitCount; i++)
+        for (int i = 0; i < QuestCount(); i++)
         {
-            m_lineUp.Enqueue(uFac.CreateRandomUnit());
+            m_todayQuest.Add(qFac.CreateRandomQuest(m_maxObjectiveCount ));
+            m_acceptUnits.Add(new List<Unit>());
         }
+        // //create units base upon quest
+        // for (int i = 0; i < m_unitCount; i++)
+        // {
+        for (int i = 0; i < m_todayQuest.Count; i++)
+        {
+            int unitCount = m_todayQuest[i].Objectives[0].RequireUnitCount + m_unitCount;
+            for (int j = 0; j < unitCount; j++)
+                m_lineUp.Enqueue(uFac.CreateRandomUnit(m_todayQuest[i]));
+        }
+        // }
 
         CurrentUnit = NextInQueue();
 
@@ -76,7 +105,8 @@ public class Reception : MonoBehaviour
 
         if (accept)
         {
-            m_acceptUnits.Add(m_currentUnit);
+            m_currentUnit.Quest.Objectives[0].CheckRequriment(m_currentUnit);
+            m_acceptUnits[FindIndexOfQuest(m_currentUnit.Quest)].Add(m_currentUnit);
         }
         else
         {
@@ -97,6 +127,13 @@ public class Reception : MonoBehaviour
         return m_lineUp.Count > 0 ? m_lineUp.Dequeue() : null;
     }
 
-
+    int QuestCount()
+    {
+        if (m_day < 3)
+            return 1;
+        else if (m_day < 6)
+            return 2;
+        return 3;
+    }
 
 }

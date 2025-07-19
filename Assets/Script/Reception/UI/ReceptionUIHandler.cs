@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,7 +6,7 @@ public class ReceptionUIHandler : MonoBehaviour
 {
     Reception reception;
     [SerializeField] DevModeUnitUIHandler unitUIHandler;
-    [SerializeField] DevModeQuestUIHandler questUIHandler;
+    [SerializeField] List<DevModeQuestUIHandler> questUIHandler = new List<DevModeQuestUIHandler>();
 
     void Start()
     {
@@ -13,6 +14,11 @@ public class ReceptionUIHandler : MonoBehaviour
 
         Auxiliary.CheckInspectorNotAssign(unitUIHandler);
         Auxiliary.CheckInspectorNotAssign(questUIHandler);
+
+        for (int i = 0; i < 3; i++)
+        {
+            questUIHandler[i].Active(false);
+        }
 
         reception.OnQueueNext += AssignReferenceToUnitUI;
         reception.OnDayNext += AssignReferenceToQuestUI;
@@ -26,7 +32,19 @@ public class ReceptionUIHandler : MonoBehaviour
 
     void AssignReferenceToQuestUI()
     {
-        if (reception.TodayQuest != null)
-            questUIHandler.rQuest = reception.TodayQuest;
+        for (int i = 0; i < reception.TodayQuest.Count; i++)
+        {
+            if (reception.TodayQuest[i] != null)
+            {
+                Quest todayQuest = reception.TodayQuest[i];
+                questUIHandler[i].rQuest = todayQuest;
+                questUIHandler[i].Active(true);
+            }
+            else
+            {
+                questUIHandler[i].Active(false);
+                
+            }
+        }
     }
 }

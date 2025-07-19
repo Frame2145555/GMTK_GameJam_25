@@ -4,18 +4,23 @@ using System;
 
 public class UnitFactory : MonoBehaviour
 {
-    ItemFactory iFac = new ItemFactory();
-    public Unit CreateRandomUnit()
+    ItemFactory iFac;
+    void Start()
+    {
+        iFac = GetComponent<ItemFactory>();   
+    }
+    public Unit CreateRandomUnit(Quest quest)
     {
         string randName = GenerateFantasyName();
         UnitStat randStat = new UnitStat();
         randStat.RandomSelf();
-        Unit newUnit = new Unit(randName, randStat);
-        newUnit.AddItem(iFac.CreateRandomItem(newUnit, randStat));
+        randStat.job = quest.Objectives[0].Requirement.job;
+        Unit newUnit = new Unit(randName, randStat, quest);
+        // newUnit.AddItem(iFac.CreateRandomItem(newUnit, randStat));
         return newUnit;
 
     }
-    public Unit CreateUnit( List<Item> items)
+    public Unit CreateUnit(Quest quest ,List<Item> items)
     {
         //Read from something
         string[] randomName = { "Pooh", "Paul", "Sky", "Shogun", "Showy", "Kong" };
@@ -23,16 +28,16 @@ public class UnitFactory : MonoBehaviour
 
         UnitStat m_unitStatus = new();
         m_unitStatus.RandomSelf();
-        Unit unit = new Unit(name, m_unitStatus, items);
+        Unit unit = new Unit(name, m_unitStatus,quest, items);
         return unit;
     }
-    public Unit CreateUnit(UnitStat UnitStat, List<Item> items)
+    public Unit CreateUnit(UnitStat UnitStat,Quest quest , List<Item> items)
     {
         //Read from something
         string[] randomName = { "Pooh", "Paul", "Sky", "Shogun", "Showy", "Kong" };
         string name = randomName[UnityEngine.Random.Range(0, randomName.Length)];
 
-        Unit unit = new Unit(name, UnitStat, items);
+        Unit unit = new Unit(name, UnitStat,quest, items);
         return unit;
     }
 
