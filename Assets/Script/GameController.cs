@@ -4,12 +4,14 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] Reception reception;
     [SerializeField] UnitGFXBuilder builder;
+    [SerializeField] ItemGameObjectBuilder itemBuilder;
     [SerializeField] UnitGFXHandler handler;
 
     private void Awake()
     {
         Auxiliary.CheckInspectorNotAssign(reception);
         Auxiliary.CheckInspectorNotAssign(builder);
+        Auxiliary.CheckInspectorNotAssign(itemBuilder);
         Auxiliary.CheckInspectorNotAssign(handler);
     }
     private void Start()

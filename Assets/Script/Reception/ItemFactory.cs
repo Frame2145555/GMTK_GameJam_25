@@ -27,9 +27,4 @@ public class ItemFactory : MonoBehaviour
         }
         return new Item(owner, name, stat, type, isFake);
     }
-    // Update is called once per frame
-    void Update()
-    {   
-    
-    }
 }

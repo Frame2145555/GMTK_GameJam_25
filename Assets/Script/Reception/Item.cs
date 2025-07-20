@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum ItemType
@@ -6,13 +7,14 @@ public enum ItemType
     Job,
     World
 }
+[Serializable]
 public class Item
 {
     private Unit owner;
-    private ItemType type;
-    private string name;
-    private UnitStat stat;
-    private bool isFake;
+    [SerializeField] ItemType type;
+    [SerializeField] private string name;
+    [SerializeField] private UnitStat stat;
+    [SerializeField] private bool isFake;
     public Unit Owner { get => owner; }
     public ItemType Type { get => type; }
     public string Name { get => name; }

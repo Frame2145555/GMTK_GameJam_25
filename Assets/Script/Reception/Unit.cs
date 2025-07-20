@@ -5,15 +5,16 @@ using Unity.VisualScripting;
 
 public enum UnitGrade
 {
-    G,F,E,D,C,B,A,S,SS,SSS
+    G, F, E, D, C, B, A, S, SS, SSS
 }
-[System.Serializable]
 
+[System.Serializable]
 public enum UnitJob
 {
-    Archer,
-    Warrior,
-    Mage
+    Fighter,
+    Ranger,
+    Mage,
+    Cleric
 }
 [System.Serializable]
 
