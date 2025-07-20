@@ -1687,6 +1687,7 @@ MonoBehaviour:
     m_stat:
       grade: 0
       job: 0
+    m_items: []
     m_quest:
       m_info:
         name: 
@@ -2973,6 +2974,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reception: {fileID: 1034737083}
   builder: {fileID: 1907110791}
+  itemBuilder: {fileID: 1907110793}
   handler: {fileID: 1359419761}
 --- !u!4 &1685372848
 Transform:
@@ -3441,6 +3443,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1907110792}
   - component: {fileID: 1907110791}
+  - component: {fileID: 1907110793}
+  - component: {fileID: 1907110794}
   m_Layer: 0
   m_Name: Builder
   m_TagString: Untagged
@@ -3484,6 +3488,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1907110793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907110790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c24a8c7fc7c386141be6e22538dd06d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 8261001314103815965, guid: 1ee7b2945a8bdfd44b1a8c63bdb356da, type: 3}
+  jobItemPrefab: {fileID: 2684381263478743031, guid: f8c45f8db7d0d144ab6ae3d39177bceb, type: 3}
+  worldItemPrefab: {fileID: 2503653445125130347, guid: ffba80ae2ddd64e40832ae07049433d8, type: 3}
+  cardItem: []
+  jobItem:
+  - name: 
+    job: 1
+    realPortrait: {fileID: 2159882370453228188, guid: 57852f7655d731a4699b1e9958d3699e, type: 3}
+    fakePortrait:
+    - {fileID: 3531318725353065392, guid: 59145fd6cb78d6540a435978eadf6117, type: 3}
+    - {fileID: 7462626975696345478, guid: 7fe5d47e00687434bb8cdc743ee8f5e3, type: 3}
+    - {fileID: -4574849596564779100, guid: fc5b2d3a0c64c8b4fb794ef008e51d06, type: 3}
+    - {fileID: -3888044604709874066, guid: b95f290067a51a845b440ba60b60759e, type: 3}
+    - {fileID: -5022500416917120848, guid: a842968eb8888d4469008c26d02580c0, type: 3}
+    - {fileID: 8762863870975874345, guid: 268cbf52b9f017b4eb36ec31445ef188, type: 3}
+    - {fileID: 7309475138855429012, guid: 27c859bcb6d0e684e9ee38f39a0f5680, type: 3}
+    - {fileID: 4951959620457688247, guid: 84eeb04322c3c224dbbee9ee80558d11, type: 3}
+    - {fileID: -6662510690702616631, guid: 824257b371a35c6468d6918b4be0cf73, type: 3}
+    - {fileID: 3978702828848977753, guid: 95a70ec37e25b694c8669fcd1e503f88, type: 3}
+    - {fileID: -2761948620915890569, guid: 9a4dec23116b2af4084ef036a2bf0792, type: 3}
+    - {fileID: 6803618459769510711, guid: c5f545c07c4199c478d2881d95960f34, type: 3}
+  worldItem: []
+--- !u!114 &1907110794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907110790}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a5a76d7c5624854eb3ce85ae5088c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item:
+    type: 1
+    name: 
+    stat:
+      grade: 1
+      job: 1
+    isFake: 1
 --- !u!1 &1920615663
 GameObject:
   m_ObjectHideFlags: 0
