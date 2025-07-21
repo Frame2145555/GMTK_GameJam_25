@@ -4,31 +4,54 @@ using System;
 
 public class UnitFactory : MonoBehaviour
 {
-    public Unit CreateRandomUnit()
+    ItemFactory iFac;
+    void Start()
+    {
+        iFac = GetComponent<ItemFactory>();   
+    }
+    public Unit CreateRandomUnit(Quest quest)
     {
         string randName = GenerateFantasyName();
         UnitStat randStat = new UnitStat();
         randStat.RandomSelf();
-
-        return new Unit(randName,randStat);
+        while (randStat.grade > quest.Objectives[0].Requirement.grade)
+            randStat.RandomSelf();
+        randStat.job = quest.Objectives[0].Requirement.job;
+        Unit newUnit = new Unit(randName, randStat, quest);
+        newUnit.AddItem(iFac.CreateRandomItem(newUnit, randStat));
+        return newUnit;
 
     }
-    public Unit CreateUnit(bool isFake, List<GameObject> items)
+    public Unit CreateUnit(Quest quest ,List<Item> items)
     {
         //Read from something
         string[] randomName = { "Pooh", "Paul", "Sky", "Shogun", "Showy", "Kong" };
         string name = randomName[UnityEngine.Random.Range(0, randomName.Length)];
-        UnitStat m_unitStatus = new();
+
+        UnitStat m_unitStatus = new UnitStat();
         m_unitStatus.RandomSelf();
-        Unit unit = new Unit(name, m_unitStatus, items);
+        while (m_unitStatus.grade > quest.Objectives[0].Requirement.grade)
+            m_unitStatus.RandomSelf();
+        m_unitStatus.job = quest.Objectives[0].Requirement.job;
+        Unit unit = new Unit(name, m_unitStatus,quest, items);
         return unit;
     }
-    public Unit CreateUnit(UnitStat unitStatus,bool isFake, List<GameObject> items)
+    public Unit CreateUnit(UnitStat UnitStat,Quest quest)
     {
         //Read from something
         string[] randomName = { "Pooh", "Paul", "Sky", "Shogun", "Showy", "Kong" };
         string name = randomName[UnityEngine.Random.Range(0, randomName.Length)];
-        Unit unit = new Unit(name, unitStatus, items);
+
+        Unit unit = new Unit(name, UnitStat,quest, null);
+        return unit;
+    }
+    public Unit CreateUnit(UnitStat UnitStat, Quest quest, List<Item> items)
+    {
+        //Read from something
+        string[] randomName = { "Pooh", "Paul", "Sky", "Shogun", "Showy", "Kong" };
+        string name = randomName[UnityEngine.Random.Range(0, randomName.Length)];
+
+        Unit unit = new Unit(name, UnitStat, quest, items);
         return unit;
     }
 

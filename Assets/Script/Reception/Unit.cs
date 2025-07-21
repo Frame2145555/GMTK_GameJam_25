@@ -1,18 +1,20 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 [System.Serializable]
 
 public enum UnitGrade
 {
-    G,F,E,D,C,B,A,S,SS,SSS
+    G, F, E, D, C, B, A, S, SS, SSS
 }
-[System.Serializable]
 
+[System.Serializable]
 public enum UnitJob
 {
-    Archer,
-    Warrior,
-    Mage
+    Fighter,
+    Ranger,
+    Mage,
+    Cleric
 }
 [System.Serializable]
 
@@ -33,17 +35,23 @@ public struct UnitStat
 [System.Serializable]
 public class Unit
 {
-    [SerializeField] string m_name;
-    [SerializeField] UnitStat m_stat;
-    [SerializeField] List<GameObject> m_items;
-
-    public Unit(string name, UnitStat status, List<GameObject> items = null)
+    [SerializeField] private string m_name;
+    [SerializeField] private UnitStat m_stat;
+    [SerializeField] private List<Item> m_items;
+    [SerializeField] private Quest m_quest;
+    public Unit(string name, UnitStat status, Quest quest, List<Item> items = null)
     {
         m_name = name;
         m_stat = status;
         m_items = items;
+        m_quest = quest;
     }
     public string Name { get => m_name; }
     public UnitStat Stat { get => m_stat; }
-    public List<GameObject> Items { get => m_items; }
+    public List<Item> Items { get => m_items; }
+    public Quest Quest{ get => m_quest; }
+    public void AddItem(Item item)
+    {
+        m_items.Add(item);
+    }
 }
