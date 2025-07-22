@@ -86,14 +86,29 @@ public class Reception : MonoBehaviour
         // //create units base upon quest
         // for (int i = 0; i < m_unitCount; i++)
         // {
+        List<Unit> tempList = new List<Unit>();
+
+
+        // Shuffle the list
+        
         for (int i = 0; i < m_todayQuest.Count; i++)
         {
             int unitCount = m_todayQuest[i].Objectives[0].RequireUnitCount + m_unitCount;
             for (int j = 0; j < unitCount; j++)
-                m_lineUp.Enqueue(uFac.CreateRandomUnit(m_todayQuest[i]));
+                tempList.Add(uFac.CreateRandomUnit(m_todayQuest[i]));
         }
         // }
-
+        for (int i = 0; i < tempList.Count; i++)
+        {
+            int randomIndex = UnityEngine.Random.Range(i, tempList.Count);
+            Unit temp = tempList[i];
+            tempList[i] = tempList[randomIndex];
+            tempList[randomIndex] = temp;
+        }
+        foreach (Unit unit in tempList)
+        {
+            m_lineUp.Enqueue(unit);
+        }
         CurrentUnit = NextInQueue();
 
         OnDayNext?.Invoke();

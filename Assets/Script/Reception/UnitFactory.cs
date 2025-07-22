@@ -18,7 +18,7 @@ public class UnitFactory : MonoBehaviour
             randStat.RandomSelf();
         randStat.job = quest.Objectives[0].Requirement.job;
         Unit newUnit = new Unit(randName, randStat, quest);
-        newUnit.AddItem(iFac.CreateRandomItem(newUnit, randStat));
+        // newUnit.AddItem(iFac.CreateRandomItem(newUnit, randStat));
         return newUnit;
 
     }
