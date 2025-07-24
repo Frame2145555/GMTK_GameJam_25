@@ -119,6 +119,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &39647145
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 39647146}
+  m_Layer: 0
+  m_Name: item Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &39647146
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39647145}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.1, y: -1.17, z: 0.0070375623}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1359419760}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &84048907
 GameObject:
   m_ObjectHideFlags: 0
@@ -1729,12 +1760,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1034737079}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f4a89b166d33c14cb1d6dcac99346b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 8eed280a24288f34b842fbbfacb28fc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitFactory: {fileID: 0}
-  questFactory: {fileID: 0}
-  itemFactory: {fileID: 0}
   questCount: 2
   extraUnit: 3
 --- !u!1 &1094683796
@@ -2486,6 +2514,7 @@ GameObject:
   - component: {fileID: 1359419760}
   - component: {fileID: 1359419759}
   - component: {fileID: 1359419761}
+  - component: {fileID: 1359419762}
   m_Layer: 0
   m_Name: Inspector View
   m_TagString: Untagged
@@ -2531,6 +2560,7 @@ Transform:
   - {fileID: 2054905427}
   - {fileID: 1808065098}
   - {fileID: 265967803}
+  - {fileID: 39647146}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1359419761
@@ -2545,6 +2575,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe5daa22673c8af4e99008a9a5ec64b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1359419762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359419758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4968b1a2d75c766458583fc1aa6e805a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemAreaCenter: {fileID: 39647146}
+  width: 10
+  height: 5
+  tolerance: 5.79
 --- !u!1 &1381151902
 GameObject:
   m_ObjectHideFlags: 0
@@ -2989,6 +3035,7 @@ MonoBehaviour:
   builder: {fileID: 1907110791}
   itemBuilder: {fileID: 1907110793}
   handler: {fileID: 1359419761}
+  itemHandler: {fileID: 1359419762}
 --- !u!4 &1685372848
 Transform:
   m_ObjectHideFlags: 0
@@ -3515,7 +3562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c24a8c7fc7c386141be6e22538dd06d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardPrefab: {fileID: 8261001314103815965, guid: 1ee7b2945a8bdfd44b1a8c63bdb356da, type: 3}
+  cardPrefab: {fileID: 5883430600960024016, guid: 1ee7b2945a8bdfd44b1a8c63bdb356da, type: 3}
   jobItemPrefab: {fileID: 2684381263478743031, guid: f8c45f8db7d0d144ab6ae3d39177bceb, type: 3}
   worldItemPrefab: {fileID: 2503653445125130347, guid: ffba80ae2ddd64e40832ae07049433d8, type: 3}
   cardItem: []

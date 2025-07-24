@@ -38,7 +38,7 @@ public struct MinMaxFloat
     public float min;
     public float max;
 
-    public MinMaxFloat(int _min, int _max)
+    public MinMaxFloat(float _min, float _max)
     {
         min = _min;
         max = _max;

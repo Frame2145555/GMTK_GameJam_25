@@ -17,7 +17,12 @@ public class JobItem : MonoBehaviour
     public void SetUp(Item item, Sprite sprite)
     {
         m_item = item;
-        m_sprite.sprite = sprite;
+        
+        if (sprite)
+            m_sprite.sprite = sprite;
+        else
+            Debug.Log("No Image");
+        
     }
 
 }
