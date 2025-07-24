@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      fighter emblem fake7_0: -5294420987759141455
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
