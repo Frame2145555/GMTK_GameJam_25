@@ -19,7 +19,7 @@ public class ItemFactory : MonoBehaviour
         ItemType type = Auxiliary.RandomEnum<ItemType>();
         if (type == ItemType.World)
         {
-            isFake = owner.Stat.grade >= stat.grade && owner.Stat.job == stat.job;
+            isFake = !(owner.Stat.grade >= stat.grade && owner.Stat.job == stat.job);
         }
         else
         {
