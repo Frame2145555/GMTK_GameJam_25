@@ -7,7 +7,8 @@ public class UnitFactory : MonoBehaviour
     ItemFactory iFac;
     void Start()
     {
-        iFac = GetComponent<ItemFactory>();   
+        iFac = GetComponent<ItemFactory>();
+        Debug.Log(iFac);
     }
     public Unit CreateRandomUnit(Quest quest)
     {
@@ -17,8 +18,10 @@ public class UnitFactory : MonoBehaviour
         while (randStat.grade > quest.Objectives[0].Requirement.grade)
             randStat.RandomSelf();
         randStat.job = quest.Objectives[0].Requirement.job;
-        Unit newUnit = new Unit(randName, randStat, quest);
-        // newUnit.AddItem(iFac.CreateRandomItem(newUnit, randStat));
+        Unit newUnit = new Unit(randName, randStat, quest, new List<Item>());
+        Item newItem = iFac.CreateRandomItem(newUnit, randStat);
+        Debug.Log(newItem);
+        newUnit.AddItem(newItem);
         return newUnit;
 
     }
@@ -42,7 +45,7 @@ public class UnitFactory : MonoBehaviour
         string[] randomName = { "Pooh", "Paul", "Sky", "Shogun", "Showy", "Kong" };
         string name = randomName[UnityEngine.Random.Range(0, randomName.Length)];
 
-        Unit unit = new Unit(name, UnitStat,quest, null);
+        Unit unit = new Unit(name, UnitStat,quest, new List<Item>());
         return unit;
     }
     public Unit CreateUnit(UnitStat UnitStat, Quest quest, List<Item> items)

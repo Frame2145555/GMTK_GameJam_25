@@ -37,7 +37,7 @@ public class Unit
 {
     [SerializeField] private string m_name;
     [SerializeField] private UnitStat m_stat;
-    [SerializeField] private List<Item> m_items;
+    [SerializeField] private List<Item> m_items = new List<Item>();
     [SerializeField] private Quest m_quest;
     public Unit(string name, UnitStat status, Quest quest, List<Item> items = null)
     {
