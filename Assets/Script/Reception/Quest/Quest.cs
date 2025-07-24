@@ -14,7 +14,7 @@ public enum QuestRank
 
 public struct QuestInfo
 {
-    public string name;
+    public string title;
     public string description;
     public QuestRank rank;
 
@@ -43,7 +43,7 @@ public struct QuestInfo
     public void RandomSelf()
     {
         string[] nameArr = { "Get down", "Omae wa mou", "Sky so high", "Raiden Shogun", "Super Idol", "King Kong" };
-        name = nameArr[UnityEngine.Random.Range(0, nameArr.Length)];
+        title = nameArr[UnityEngine.Random.Range(0, nameArr.Length)];
         description = RandomDescription();
         rank = Auxiliary.RandomEnum<QuestRank>();
     }
@@ -52,29 +52,28 @@ public struct QuestInfo
 [System.Serializable]
 public class Quest
 {
-    [SerializeField] private QuestInfo m_info;
-    [SerializeField] private int m_id;
+    [SerializeField] private QuestInfo info;
+    [SerializeField] private Objective objective;
+    [SerializeField] private List<Unit> roster = new List<Unit>();
 
-    [SerializeField] private List<Objective> m_objectives;
-
-    public QuestInfo Info { get => m_info; }
-    public List<Objective> Objectives { get => m_objectives; }
-    public Quest(QuestInfo info, int id, List<Objective> objectives)
+    public QuestInfo Info { get => info; }
+    public Objective Objective { get => objective; }
+    public Quest(QuestInfo info, Objective objectives)
     {
-        m_info = info;
-        m_id = id;
-        m_objectives = objectives;
+        this.info = info;
+        this.objective = objectives;
     }
 
-    public bool ConfirmQuest(List<Unit> units)
+    public void AddUnit(Unit unit)
     {
-        foreach (var unit in units)
-        {
-            m_objectives.ForEach(obj => obj.CheckRequriment(unit));
-        }
+        roster.Add(unit);
+        objective.TryAdd(unit);
+        
+    }
 
-        //return true if all objective is success
-        return m_objectives.TrueForAll(obj => obj.IsComplete());
+    public bool IsCompleted()
+    {
+        return objective.IsComplete();
     }
 
 }

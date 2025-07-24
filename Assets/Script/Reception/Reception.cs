@@ -1,154 +1,66 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-using Unity.VisualScripting;
+
 public class Reception : MonoBehaviour
 {
-    QuestFactory qFac;
-    UnitFactory uFac;
-    ItemFactory iFac;
+    private GameManager gm;
+    [SerializeReference] Unit currentUnit;
 
-    [SerializeField] private List<Quest> m_todayQuest = new List<Quest>();
-    [SerializeField] private Queue<Unit> m_lineUp = new Queue<Unit>();
-    [SerializeField] private Unit m_currentUnit;
-    
-    [SerializeField] private List<List<Unit>> m_acceptUnits = new List<List<Unit>>();
-    [SerializeField] private List<Unit> m_rejectedUnits = new List<Unit>();
-    [Header("Config")]
-    [SerializeField] private int m_unitCount = 10;
-    [SerializeField] private int m_maxObjectiveCount = 1;
-    private int m_day = 1;
-    public Action OnDayNext;
-    public Action OnQueueNext;
-    public int Day { get => m_day; }
-    public Unit CurrentUnit {
-        get
-        {
-            // Debug
-            // String s = m_currentUnit.Name + "/"
-            //     + m_currentUnit.Stat.job.ToString() + "/"
-            //     + m_currentUnit.Stat.grade.ToString() + "/";
-            // Debug.Log(s);
-            return m_currentUnit;
-        }
-        private set
-        {
-            m_currentUnit = value;
-            OnQueueNext?.Invoke();
-        }
-    }
-    public int FindIndexOfQuest(Quest quest)
+    public Action OnNextUnit;
+
+    public Unit CurrentUnit { get => currentUnit; }
+
+    private void Awake()
     {
-        return m_todayQuest.IndexOf(quest);
+        gm = FindFirstObjectByType<GameManager>();
+        gm.OnDayNext += OnDayNext;
     }
-    public List<Quest> TodayQuest { get => m_todayQuest; }
-    private void Start()
+    void Decide(bool decision)
     {
-        qFac = GetComponent<QuestFactory>();
-        uFac = GetComponent<UnitFactory>();
-        iFac = GetComponent<ItemFactory>();
-        for (int i = 0; i < QuestCount(); i++)
+        if (currentUnit == null)
         {
-            m_todayQuest.Add(qFac.CreateRandomQuest(1));
-            m_acceptUnits.Add(new List<Unit>());
-        }
-    }
-    
-    bool ComfirmQuest()
-    {
-        for (int i = 0;i < QuestCount(); i++)
-        {
-            if(!m_todayQuest[i].ConfirmQuest(m_acceptUnits[i]))
-                return false;
-        }
-        return true;
-    }
-    [ContextMenu("Next Day")]
-    public void NextDay()
-    {
-        if (m_acceptUnits != null && m_todayQuest != null)
-        {
-            string logSuccess = ComfirmQuest() ? "Quest Success!" : "Quest Failed...";
-            Debug.Log(logSuccess);
+            return;
         }
 
-        m_lineUp.Clear();
-        m_acceptUnits.Clear();
-        m_rejectedUnits.Clear();
-        m_todayQuest.Clear();
-        m_day += 1;
-        //create quest
-        for (int i = 0; i < QuestCount(); i++)
+        if (decision)
         {
-            m_todayQuest.Add(qFac.CreateRandomQuest(m_maxObjectiveCount ));
-            m_acceptUnits.Add(new List<Unit>());
-        }
-        // //create units base upon quest
-        // for (int i = 0; i < m_unitCount; i++)
-        // {
-        List<Unit> tempList = new List<Unit>();
-
-
-        // Shuffle the list
-        
-        for (int i = 0; i < m_todayQuest.Count; i++)
-        {
-            int unitCount = m_todayQuest[i].Objectives[0].RequireUnitCount + m_unitCount;
-            for (int j = 0; j < unitCount; j++)
-                tempList.Add(uFac.CreateRandomUnit(m_todayQuest[i]));
-        }
-        // }
-        for (int i = 0; i < tempList.Count; i++)
-        {
-            int randomIndex = UnityEngine.Random.Range(i, tempList.Count);
-            Unit temp = tempList[i];
-            tempList[i] = tempList[randomIndex];
-            tempList[randomIndex] = temp;
-        }
-        foreach (Unit unit in tempList)
-        {
-            m_lineUp.Enqueue(unit);
-        }
-        CurrentUnit = NextInQueue();
-
-        OnDayNext?.Invoke();
-    }
-
-    public void Decide(bool accept)
-    {
-        if (m_currentUnit == null) return;
-
-        if (accept)
-        {
-            m_currentUnit.Quest.Objectives[0].CheckRequriment(m_currentUnit);
-            m_acceptUnits[FindIndexOfQuest(m_currentUnit.Quest)].Add(m_currentUnit);
+            currentUnit.Quest.AddUnit(currentUnit);
+            GameData.acceptedUnit.Add(currentUnit);
         }
         else
         {
-            m_rejectedUnits.Add(m_currentUnit);
+            GameData.rejectedUnit.Add(currentUnit);
         }
 
-        CurrentUnit = NextInQueue();
+        NextUnit();
     }
 
-    [ContextMenu("Accept")]
-    public void Accept() => Decide(true);
+    /// <summary>
+    /// GetNextUnit warpper for calling Action
+    /// </summary>
+    void NextUnit()
+    {
+        currentUnit = GetNextUnit();
+        OnNextUnit?.Invoke();
+    }
+    Unit GetNextUnit()
+    {
+        //Debug
+        //Debug.Log(GameData.units.Count);
+        if (GameData.units.Count <= 0)
+            return null;
+        int index = UnityEngine.Random.Range(0, GameData.units.Count);
+        Unit temp = GameData.units[index];
+        GameData.units.RemoveAt(index);
+        return temp;
+    }
 
-    [ContextMenu("Reject")]
+    public void Accept() => Decide(true);
     public void Reject() => Decide(false);
 
-    Unit NextInQueue()
+    void OnDayNext()
     {
-        return m_lineUp.Count > 0 ? m_lineUp.Dequeue() : null;
+        NextUnit();
     }
-
-    int QuestCount()
-    {
-        if (m_day < 3)
-            return 1;
-        else if (m_day < 6)
-            return 2;
-        return 3;
-    }
-
 }

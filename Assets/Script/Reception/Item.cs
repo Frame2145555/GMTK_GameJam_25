@@ -10,7 +10,7 @@ public enum ItemType
 [Serializable]
 public class Item
 {
-    private Unit owner;
+    [SerializeReference] private Unit owner;
     [SerializeField] ItemType type;
     [SerializeField] private string name;
     [SerializeField] private UnitStat stat;
