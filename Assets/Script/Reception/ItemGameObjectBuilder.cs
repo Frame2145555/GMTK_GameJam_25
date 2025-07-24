@@ -132,7 +132,7 @@ public class ItemGameObjectBuilder : MonoBehaviour
         Debug.LogError($"Can not find {item.Name} image");
         return null;
     }
-    public void CreateItemGameObject(Item item, Vector2 pos)
+    public GameObject CreateItemGameObject(Item item)
     {
         GameObject newObject = null;
         switch (item.Type)
@@ -150,7 +150,7 @@ public class ItemGameObjectBuilder : MonoBehaviour
                 Debug.LogError("Item Type Not Found");
                 break;
         }
-        newObject.transform.position = pos;
+        return newObject;
     }
     GameObject CreateCard(Item item)
     {

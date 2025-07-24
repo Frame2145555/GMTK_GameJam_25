@@ -35,10 +35,11 @@ public struct UnitStat
 [System.Serializable]
 public class Unit
 {
+
     [SerializeField] private string name;
     [SerializeField] private UnitStat stat;
     [SerializeReference] private Quest quest;
-    [SerializeReference] private List<Item> items;
+    [SerializeReference] private List<Item> items = new List<Item>();
     public Unit(string name, UnitStat status)
     {
         this.name = name;

@@ -9,7 +9,7 @@ public class PluemScript : MonoBehaviour
     {
         itemGame = GetComponent<ItemGameObjectBuilder>();
         
-        itemGame.CreateItemGameObject(item, Vector2.zero);
+        itemGame.CreateItemGameObject(item);
     }
 
     // Update is called once per frame
