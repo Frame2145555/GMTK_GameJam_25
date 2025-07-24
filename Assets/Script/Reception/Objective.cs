@@ -1,36 +1,41 @@
+using NUnit.Framework;
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class Objective
 {
-    [SerializeField] private UnitStat m_requirement;
-    [SerializeField] private ObjectiveCondition m_conditionType;
-    [SerializeField] Func<UnitStat,UnitStat,bool> m_condition;
+    [SerializeField] private UnitStat baseUnitStat;
+    [SerializeField] private ObjectiveCondition conditionType = ObjectiveCondition.GreaterEqual;
+    [SerializeField] Func<UnitStat, UnitStat, bool> condition;
 
-    [SerializeField] private int m_requireUnitCount;
-    [SerializeField] private int m_acceptedUnitCount = 0;
+    [SerializeField] private int requireUnitCount;
+    [SerializeField] private List<Unit> acceptedUnit = new List<Unit>();
 
-    public UnitStat Requirement { get => m_requirement; }
-    public ObjectiveCondition ConditionType { get => m_conditionType; }
-    public int RequireUnitCount {  get => m_requireUnitCount; }
-    public int AcceptedUnitCount {  get => m_acceptedUnitCount; }
+    public UnitStat BaseUnitStat { get => baseUnitStat; }
+    public ObjectiveCondition ConditionType { get => conditionType; }
+    public int RequireUnitCount { get => requireUnitCount; }
 
     public Objective(UnitStat req, ObjectiveCondition contype, Func<UnitStat, UnitStat, bool> condi, int reqCnt)
     {
-        m_requirement = req;
-        m_conditionType = contype;
-        m_condition = condi;
-        m_requireUnitCount = reqCnt;
+        baseUnitStat = req;
+        conditionType = contype;
+        condition = condi;
+        requireUnitCount = reqCnt;
     }
 
-    public bool IsComplete() => m_requireUnitCount == m_acceptedUnitCount;
-    public bool CheckRequriment(Unit unit)
+    public bool IsComplete() => requireUnitCount == acceptedUnit.Count;
+    public bool TryAdd(Unit unit)
     {
-        bool b = m_condition(m_requirement, unit.Stat);
-        if (b) m_acceptedUnitCount++;
+        bool b = condition(baseUnitStat, unit.Stat);
+        if (b)
+        {
+            acceptedUnit.Add(unit);
+        }
         return b;
     }
-    public bool IsFull() => m_requireUnitCount == m_acceptedUnitCount;
+
+    public int GetAcceptedUnitCount() => acceptedUnit.Count;
     
 }

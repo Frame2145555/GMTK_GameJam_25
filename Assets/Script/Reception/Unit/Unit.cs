@@ -35,23 +35,20 @@ public struct UnitStat
 [System.Serializable]
 public class Unit
 {
-    [SerializeField] private string m_name;
-    [SerializeField] private UnitStat m_stat;
-    [SerializeField] private List<Item> m_items;
-    [SerializeField] private Quest m_quest;
-    public Unit(string name, UnitStat status, Quest quest, List<Item> items = null)
+    [SerializeField] private string name;
+    [SerializeField] private UnitStat stat;
+    [SerializeReference] private Quest quest;
+    [SerializeReference] private List<Item> items;
+    public Unit(string name, UnitStat status)
     {
-        m_name = name;
-        m_stat = status;
-        m_items = items;
-        m_quest = quest;
+        this.name = name;
+        stat = status;
     }
-    public string Name { get => m_name; }
-    public UnitStat Stat { get => m_stat; }
-    public List<Item> Items { get => m_items; }
-    public Quest Quest{ get => m_quest; }
-    public void AddItem(Item item)
-    {
-        m_items.Add(item);
-    }
+    public string Name { get => name; }
+    public UnitStat Stat { get => stat; set => stat = value; }
+    public List<Item> Items { get => items; }
+    public Quest Quest{ get => quest; }
+    public void AssignQuest(Quest quest) => this.quest = quest;
+    public void AddItem(Item item) => items.Add(item);
+    
 }

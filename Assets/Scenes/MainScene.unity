@@ -181,10 +181,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7ac7a6d8fc3804aad91c8ec9108476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_title: {fileID: 118209765}
-  m_description: {fileID: 2018300611}
-  m_job: {fileID: 2115764560}
-  m_rank: {fileID: 160370130}
+  title: {fileID: 118209765}
+  description: {fileID: 2018300611}
+  job: {fileID: 2115764560}
+  rank: {fileID: 160370130}
   m_count: {fileID: 2055124332}
 --- !u!1 &118209763
 GameObject:
@@ -1354,10 +1354,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7ac7a6d8fc3804aad91c8ec9108476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_title: {fileID: 998105517}
-  m_description: {fileID: 1830401278}
-  m_job: {fileID: 1094683798}
-  m_rank: {fileID: 1921938411}
+  title: {fileID: 998105517}
+  description: {fileID: 1830401278}
+  job: {fileID: 1094683798}
+  rank: {fileID: 1921938411}
   m_count: {fileID: 1122142736}
 --- !u!1 &998105515
 GameObject:
@@ -1609,10 +1609,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1034737084}
   - component: {fileID: 1034737083}
-  - component: {fileID: 1034737082}
   - component: {fileID: 1034737081}
+  - component: {fileID: 1034737082}
   - component: {fileID: 1034737085}
   - component: {fileID: 1034737080}
+  - component: {fileID: 1034737086}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1649,6 +1650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c327858de0fca343a3837aea0f32a71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemFactory: {fileID: 1034737085}
 --- !u!114 &1034737082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1661,14 +1663,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2fc06a4856e3364a9422e91c8b33c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_currentCondition: 3
-  m_QuestPreview:
-    m_info:
-      name: 
-      description: 
-      rank: 0
-    m_id: 0
-    m_objectives: []
+  questBlueprints:
+  - {fileID: 11400000, guid: abe00a2638b0dd6439715f7b244fbba3, type: 2}
+  currentCondition: 3
+  questPreview:
+    rid: -2
+  maxObjectiveUnitRequire: 4
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!114 &1034737083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1681,23 +1686,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5175716ac196b4f41995bcf26be2fd26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_todayQuest: []
-  m_currentUnit:
-    m_name: 
-    m_stat:
-      grade: 0
-      job: 0
-    m_items: []
-    m_quest:
-      m_info:
-        name: 
-        description: 
-        rank: 0
-      m_id: 0
-      m_objectives: []
-  m_rejectedUnits: []
-  m_unitCount: 10
-  m_maxObjectiveCount: 1
+  currentUnit:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!4 &1034737084
 Transform:
   m_ObjectHideFlags: 0
@@ -1725,6 +1720,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecef35320f91dc04abef3890177fa591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1034737086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034737079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f4a89b166d33c14cb1d6dcac99346b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitFactory: {fileID: 0}
+  questFactory: {fileID: 0}
+  itemFactory: {fileID: 0}
+  questCount: 2
+  extraUnit: 3
 --- !u!1 &1094683796
 GameObject:
   m_ObjectHideFlags: 0
@@ -2973,6 +2985,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reception: {fileID: 1034737083}
+  gameManager: {fileID: 1034737086}
   builder: {fileID: 1907110791}
   itemBuilder: {fileID: 1907110793}
   handler: {fileID: 1359419761}
@@ -3396,10 +3409,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7ac7a6d8fc3804aad91c8ec9108476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_title: {fileID: 2111744239}
-  m_description: {fileID: 661189705}
-  m_job: {fileID: 1932630861}
-  m_rank: {fileID: 664098477}
+  title: {fileID: 2111744239}
+  description: {fileID: 661189705}
+  job: {fileID: 1932630861}
+  rank: {fileID: 664098477}
   m_count: {fileID: 1679360614}
 --- !u!224 &1886622205
 RectTransform:
@@ -3466,11 +3479,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   JobSpritePairHandAssign:
   - fst: 0
-    snd: {fileID: -7132172409892320828, guid: e6b6d340f95d35b4584ec10c9df65869, type: 3}
-  - fst: 1
     snd: {fileID: -8180171696930044909, guid: 8c0cf15a3f199b94dacecae9d631bfbe, type: 3}
+  - fst: 1
+    snd: {fileID: -7132172409892320828, guid: e6b6d340f95d35b4584ec10c9df65869, type: 3}
   - fst: 2
     snd: {fileID: -7285376162372006033, guid: 259a575beda76214a89d0ece333ba65d, type: 3}
+  - fst: 3
+    snd: {fileID: -4249693664008208716, guid: 1d7dbbb3208c20347bfb7fa011aa92ec, type: 3}
   m_unitStandPrefab: {fileID: 831661030522426727, guid: 5836b435f2b18114ab7ff31ff77645f3, type: 3}
   m_standPoint: {fileID: 265967803}
 --- !u!4 &1907110792
@@ -3535,12 +3550,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
+    owner:
+      rid: -2
     type: 1
     name: 
     stat:
       grade: 1
       job: 1
     isFake: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &1920615663
 GameObject:
   m_ObjectHideFlags: 0

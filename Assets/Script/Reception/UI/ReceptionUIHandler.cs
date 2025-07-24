@@ -5,46 +5,43 @@ using UnityEngine.UI;
 public class ReceptionUIHandler : MonoBehaviour
 {
     Reception reception;
+    GameManager gm;
     [SerializeField] DevModeUnitUIHandler unitUIHandler;
     [SerializeField] List<DevModeQuestUIHandler> questUIHandler = new List<DevModeQuestUIHandler>();
 
     void Start()
     {
         reception = GetComponent<Reception>();
+        gm = GetComponent<GameManager>();
 
         Auxiliary.CheckInspectorNotAssign(unitUIHandler);
         Auxiliary.CheckInspectorNotAssign(questUIHandler);
 
-        for (int i = 0; i < 3; i++)
-        {
-            questUIHandler[i].Active(false);
-        }
+        //On start, disable all DevModeQuestUIHandler GameObject
+        questUIHandler.ForEach((qUI) => qUI.gameObject.SetActive(false));
 
-        reception.OnQueueNext += AssignReferenceToUnitUI;
-        reception.OnDayNext += AssignReferenceToQuestUI;
+        reception.OnNextUnit += UpdateUnitUI;
+        reception.OnNextUnit += UpdateQuestUI;
     }
 
-    void AssignReferenceToUnitUI()
+    void UpdateUnitUI()
     {
         if (reception.CurrentUnit != null)
             unitUIHandler.rUnit = reception.CurrentUnit;
     }
-
+    void UpdateQuestUI()
+    {
+        AssignReferenceToQuestUI();
+        questUIHandler.ForEach((qUI) => { if (qUI.isActiveAndEnabled) qUI.UpdateTexts(); });
+    }
     void AssignReferenceToQuestUI()
     {
-        for (int i = 0; i < reception.TodayQuest.Count; i++)
+        questUIHandler.ForEach((qUI) => qUI.gameObject.SetActive(false));
+        for (int i = 0; i < GameData.quests.Count; i++)
         {
-            if (reception.TodayQuest[i] != null)
-            {
-                Quest todayQuest = reception.TodayQuest[i];
-                questUIHandler[i].rQuest = todayQuest;
-                questUIHandler[i].Active(true);
-            }
-            else
-            {
-                questUIHandler[i].Active(false);
-                
-            }
+            questUIHandler[i].rQuest = GameData.quests[i];
+            questUIHandler[i].gameObject.SetActive(true);
         }
     }
+
 }
