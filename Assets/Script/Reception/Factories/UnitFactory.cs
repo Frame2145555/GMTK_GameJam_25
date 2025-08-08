@@ -17,7 +17,7 @@ public class UnitFactory : MonoBehaviour
         randStat.RandomSelf();
 
         Unit newUnit = new(randName, randStat);
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 3; i++)
         {
             Item item = itemFactory.CreateRandomItem(newUnit, randStat);
             newUnit.AddItem(item);

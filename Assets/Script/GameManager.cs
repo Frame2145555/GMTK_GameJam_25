@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-
+using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     UnitFactory unitFactory;
@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        GetWorldItemData();
         unitFactory = GetComponent<UnitFactory>();
         questFactory = GetComponent<QuestFactory>();
         itemFactory = GetComponent<ItemFactory>();
@@ -88,9 +89,14 @@ public class GameManager : MonoBehaviour
     }
     void CheckQuestsCompletation()
     {
-        GameData.quests.ForEach(quest => {
+        GameData.quests.ForEach(quest =>
+        {
             Debug.Log(quest.Info.title);
             Debug.Log(quest.IsCompleted());
         });
+    }
+    void GetWorldItemData()
+    {
+        GameData.worldItemSO = new List<ItemBlueprint>(Resources.LoadAll<ItemBlueprint>("WorldItem"));
     }
 }

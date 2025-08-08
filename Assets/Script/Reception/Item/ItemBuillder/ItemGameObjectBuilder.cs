@@ -120,13 +120,12 @@ public class ItemGameObjectBuilder : MonoBehaviour
     }
     Sprite GetWorldItemPortrait(Item item)
     {
-        foreach (ItemPortrait p in worldItem)
+        List<ItemBlueprint> allWorldItem = GameData.worldItemSO;
+        foreach (ItemBlueprint p in allWorldItem)
         {
             if (p.name == item.Name)
             {
-                if (item.IsFake)
-                    return p.fakePortrait[UnityEngine.Random.Range(0, p.fakePortrait.Count)];
-                return p.realPortrait;
+                return p.portrait;
             }
         }
         Debug.LogError($"Can not find {item.Name} image");
