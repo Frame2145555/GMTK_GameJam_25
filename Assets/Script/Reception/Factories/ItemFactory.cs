@@ -22,9 +22,9 @@ public class ItemFactory : MonoBehaviour
         Item job = CreateJobItem(owner);
         if (job != null)
             op.Add(job);
-        Item world = CreateWorldItem(owner);
-        if (world != null)
-            op.Add(world);
+        // Item world = CreateWorldItem(owner);
+        // if (world != null)
+        //     op.Add(world);
 
         return op;
     }
