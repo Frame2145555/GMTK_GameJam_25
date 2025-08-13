@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: CustomQuest1
   m_EditorClassIdentifier: 
   info:
-    name: Hatena Yousei
+    title: Hatena Yousei
     description: Find a question mark fairy
     rank: 1
   objective:
     baseUnitStat:
       grade: 3
-      job: 2
+      job: 1
     conditionType: 3
     requireUnit: 1

@@ -17,10 +17,10 @@ public class UnitFactory : MonoBehaviour
         randStat.RandomSelf();
 
         Unit newUnit = new(randName, randStat);
-        for (int i = 0; i < 3; i++)
+        List<Item> item = itemFactory.CreateUnitItem(newUnit);
+        for (int i = 0; i < item.Count; i++)
         {
-            Item item = itemFactory.CreateRandomItem(newUnit, randStat);
-            newUnit.AddItem(item);
+            newUnit.AddItem(item[i]);
         }
         if (quest != null) newUnit.AssignQuest(quest);
 

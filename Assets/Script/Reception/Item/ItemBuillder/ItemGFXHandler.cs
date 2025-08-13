@@ -4,8 +4,8 @@ using UnityEngine;
 public class ItemGFXHandler : MonoBehaviour
 {
     [SerializeField] Transform itemAreaCenter;
-    [SerializeField] float width;
-    [SerializeField] float height;
+    [SerializeField] List<Transform> itemPosition = new List<Transform>();
+    float width, height;
     List<GameObject> m_items = new List<GameObject>();
     public List<GameObject> Items
     {
@@ -19,7 +19,7 @@ public class ItemGFXHandler : MonoBehaviour
             for (int i = 0; i < m_items.Count; i++)
             {
                 m_items[i].transform.parent = itemAreaCenter;
-                m_items[i].transform.position = GetRandomPosition();
+                m_items[i].transform.position = itemPosition[i].position;
             }
         }
     }

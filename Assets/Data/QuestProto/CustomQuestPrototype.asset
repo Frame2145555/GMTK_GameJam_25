@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: CustomQuestPrototype
   m_EditorClassIdentifier: 
   info:
-    title: 
-    description: 
+    title: Where are my bag
+    description: I lost my bag
     rank: 0
   objective:
     baseUnitStat:

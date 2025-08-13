@@ -7,11 +7,13 @@ public class ItemFactory : MonoBehaviour
     [SerializeField] int m_randomCardStatChange = 4;
     [SerializeField] int m_randomJobItemStatChange = 10;
     [SerializeField] int m_randomWorldItemStatChange = 10;
-    [SerializeField] List<Pair<UnitJob, string>> JobNamePair;
+    [SerializeField] List<Pair<UnitJob, string>> jobNamePair;
+    Dictionary<UnitJob, string> JobNamePair = new Dictionary<UnitJob, string>();
     [SerializeField] List<string> worldItemName = new List<string>();
     void Start()
     {
-        Auxiliary.CheckInspectorNotAssign(JobNamePair);
+        Auxiliary.CheckInspectorNotAssign(jobNamePair);
+        JobNamePair = Auxiliary.ListPair2Dictionary(jobNamePair);
     }
     public List<Item> CreateUnitItem(Unit owner)
     {
@@ -65,7 +67,7 @@ public class ItemFactory : MonoBehaviour
     }
     public Item CreateJobItem(Unit owner)
     {
-        string name = $"{JobNamePair[(int)owner.Stat.job]}";
+        string name = $"{JobNamePair[owner.Stat.job]}";
         UnitStat stat = owner.Stat;
         bool isFake = false;
         if (UnityEngine.Random.Range(0, m_randomJobItemStatChange) == 0)

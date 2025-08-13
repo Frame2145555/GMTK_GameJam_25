@@ -13,16 +13,12 @@ MonoBehaviour:
   m_Name: CustomQuest2
   m_EditorClassIdentifier: 
   info:
-    name: 
-    description: 
+    title: Kill The monster
+    description: monster
     rank: 0
   objective:
     baseUnitStat:
       grade: 0
       job: 0
     conditionType: 0
-    requireUnitCount: 0
-    acceptedUnit: []
-  references:
-    version: 2
-    RefIds: []
+    requireUnit: 0

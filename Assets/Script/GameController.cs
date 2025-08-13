@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+[DefaultExecutionOrder(1000)]
 public class GameController : MonoBehaviour
 {
     [SerializeReference] Reception reception;
@@ -21,8 +21,11 @@ public class GameController : MonoBehaviour
     }
     private void Start()
     {
+
         reception.OnNextUnit += TryCreateUnitGFX;
         reception.OnNextUnit += TryCreateItemGFX;
+
+        NextDay();
     }
     void TryCreateUnitGFX()
     {

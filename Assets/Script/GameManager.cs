@@ -58,8 +58,9 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < questCount; i++)
             {
                 Unit newUnit = unitFactory.CreateRandomUnit(quest);
-                GameData.units.Add(unitFactory.CreateRandomUnit(quest));
+                
                 ApplyQuestBaseStat(newUnit, quest);
+                GameData.units.Add(newUnit);
             }
         }
 
