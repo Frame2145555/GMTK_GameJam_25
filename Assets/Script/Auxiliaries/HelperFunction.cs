@@ -15,8 +15,9 @@ public static class Auxiliary
     public static T RandomEnumLessThan<T>(T current) where T : Enum
     {
         int currentIndex = Convert.ToInt32(current);
-        if (currentIndex <= 0) throw new InvalidOperationException("No lower enum values.");
-
+        if (currentIndex < 0) throw new InvalidOperationException("No lower enum values.");
+        else if (currentIndex == 0)
+            return current;
         int randomIndex = UnityEngine.Random.Range(0, currentIndex);
         return (T)Enum.GetValues(typeof(T)).GetValue(randomIndex);
     }

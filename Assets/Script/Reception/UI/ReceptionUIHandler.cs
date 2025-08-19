@@ -7,6 +7,7 @@ public class ReceptionUIHandler : MonoBehaviour
     Reception reception;
     GameManager gm;
     [SerializeField] DevModeUnitUIHandler unitUIHandler;
+    [SerializeField] QuestBoardUIHandler questBoardUIHandler;
     [SerializeField] List<DevModeQuestUIHandler> questUIHandler = new List<DevModeQuestUIHandler>();
 
     void Start()
@@ -37,9 +38,11 @@ public class ReceptionUIHandler : MonoBehaviour
     void AssignReferenceToQuestUI()
     {
         questUIHandler.ForEach((qUI) => qUI.gameObject.SetActive(false));
+        questBoardUIHandler.AllCard = GameData.quests;
         for (int i = 0; i < GameData.quests.Count; i++)
         {
             questUIHandler[i].rQuest = GameData.quests[i];
+
             questUIHandler[i].gameObject.SetActive(true);
         }
     }
