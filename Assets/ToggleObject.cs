@@ -20,7 +20,7 @@ public class ToggleObject : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && GameData.units.Count != 0)
         {
             for (int i = 0; i < View.Length; i++)
             {

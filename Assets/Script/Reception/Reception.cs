@@ -5,7 +5,7 @@ using System;
 public class Reception : MonoBehaviour
 {
     private GameManager gm;
-    [SerializeReference] Unit currentUnit;
+    [SerializeField] Unit currentUnit;
 
     public Action OnNextUnit;
 
